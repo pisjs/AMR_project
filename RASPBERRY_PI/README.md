@@ -2,7 +2,7 @@
 
 병원 자율주행 AMR(Autonomous Mobile Robot)의 Raspberry Pi 기반 ROS2 제어 패키지입니다.
 
-Raspberry Pi는 ROS2 Humble 환경에서 LiDAR SLAM, 카메라 스트리밍, Serial 기반 Arduino 제어 기능을 수행합니다.
+Raspberry Pi는 ROS2 Humble 환경에서 LiDAR SLAM, Raspberry Pi Camera 스트리밍, Serial 기반 Arduino 제어 기능을 수행합니다.
 
 ---
 
@@ -12,7 +12,7 @@ Raspberry Pi는 ROS2 Humble 환경에서 LiDAR SLAM, 카메라 스트리밍, Ser
 - `/cmd_vel` 속도 명령 처리
 - Arduino Serial UART 통신
 - LiDAR 기반 SLAM
-- USB 카메라 스트리밍
+- Raspberry Pi Camera 영상 스트리밍
 - ROS2 Launch 시스템 구성
 
 ---
@@ -77,9 +77,9 @@ ros2 launch slampibot_robot slam.launch.py
 
 ---
 
-## 3. USB 카메라 노드 실행
+## 3. Raspberry Pi Camera 노드 실행
 
-카메라 영상을 ROS2 토픽으로 발행합니다.
+Raspberry Pi Camera 영상을 ROS2 토픽으로 발행합니다.
 
 ```bash
 ros2 run camera_ros camera_node --ros-args -p width:=640 -p height:=480 -p format:=YUYV
@@ -93,7 +93,7 @@ ros2 run camera_ros camera_node --ros-args -p width:=640 -p height:=480 -p forma
 |---|---|
 | `ros2 run slampibot_robot robot_control` | Arduino Serial 제어 |
 | `ros2 launch slampibot_robot slam.launch.py` | LiDAR 및 SLAM 실행 |
-| `ros2 run camera_ros camera_node` | USB 카메라 영상 발행 |
+| `ros2 run camera_ros camera_node` | Raspberry Pi Camera 영상 발행 |
 
 ---
 
@@ -132,29 +132,29 @@ ros2 run camera_ros camera_node --ros-args -p width:=640 -p height:=480 -p forma
 # 전체 시스템 실행 구조
 
 ```text
-USB Camera
-    ↓
-camera_node
-    ↓
-/image_raw
+Raspberry Pi Camera
+        ↓
+    camera_node
+        ↓
+    /image_raw
 
 RPLidar C1
-    ↓
-/scan
-    ↓
+        ↓
+      /scan
+        ↓
 cartographer_node
-    ↓
-/map
+        ↓
+      /map
 
 teleop_twist_keyboard
-    ↓
-/cmd_vel
-    ↓
-robot_control
-    ↓
-Serial UART
-    ↓
-Arduino Uno
+        ↓
+     /cmd_vel
+        ↓
+   robot_control
+        ↓
+    Serial UART
+        ↓
+    Arduino Uno
 ```
 
 ---
@@ -186,6 +186,7 @@ RASPBERRY_PI
 | `sensor_msgs` | 센서 데이터 메시지 |
 | `cartographer_ros` | SLAM |
 | `rviz2` | 시각화 |
+| `camera_ros` | 카메라 영상 발행 |
 
 ---
 
@@ -225,3 +226,4 @@ Raspberry Pi는 ROS2 기반 메인 제어 시스템 역할을 수행합니다.
 - Ubuntu PC와 네트워크 기반 연동
 - RViz2를 통한 실시간 지도 시각화 지원
 - Raspberry Pi ↔ Arduino Serial UART 통신 사용
+- Raspberry Pi Camera Module 기반 영상 스트리밍 사용
