@@ -1,4 +1,3 @@
-# SERVER
 
 Ubuntu PC 서버에서 실행되는 ROS2 SLAM 모니터링 패키지입니다.
 
