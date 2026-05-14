@@ -1,0 +1,8 @@
+RASPBERRY_PI/ros2_ws/build
+RASPBERRY_PI/ros2_ws/install
+RASPBERRY_PI/ros2_ws/log
+
+SERVER/ros2_ws/build
+SERVER/ros2_ws/install
+SERVER/ros2_ws/log
+.vscode/
